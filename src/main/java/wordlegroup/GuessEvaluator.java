@@ -41,7 +41,7 @@ public class GuessEvaluator {
     /** The word currently guessed by the user */
     private String currentGuess;
 
-    public GuessEvaluator(String  correctWord){
+    public GuessEvaluator(String correctWord){
         this.correctWord = correctWord;
     }
 

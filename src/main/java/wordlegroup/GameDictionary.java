@@ -37,6 +37,7 @@ package wordlegroup;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
@@ -126,15 +127,18 @@ public class GameDictionary
             System.out.println(e);
         }
 
-
-
     }
-    public String selectRandonWord()
+    public String selectRandomWord()
     {
-        return " ";
+        String[] arrayOfWords = wordSet.toArray(new String[wordSet.size()]);
+        Random random = new Random();
+        int randNumber = random.nextInt(arrayOfWords.length);
+
+        return arrayOfWords[randNumber];
     }
 
-
-
-
+    public Set<String> getWordSet()
+    {
+        return wordSet;
+    }
 }

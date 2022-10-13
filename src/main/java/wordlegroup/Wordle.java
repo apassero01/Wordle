@@ -34,16 +34,183 @@
 
 package wordlegroup;
 
+import java.io.File;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+enum GameState
+{
+    NO_GAME,
+    GAME_IN_PROGRESS,
+    GAME_WINNER,
+    GAME_LOSER
+}
 public class Wordle {
 
+    public static final int WORD_LENGTH = 5;
+
+    private static Scanner scnr;
+
+    private int guessNumber;
+
+    private String currentGuess;
+
+    private String correctWord;
+
+    private boolean isCorrect;
+
+    private GuessEvaluator guessEvaluator;
+
+    private GameState state;
+
     private GameDictionary gameDictionary;
+
+    public Wordle()
+    {
+        this.state = GameState.NO_GAME;
+        this.scnr = new Scanner(System.in);
+    }
+
+    public void playGame()
+    {
+        if (this.state == GameState.GAME_IN_PROGRESS)
+        {
+            System.out.println("Invalid State");
+            return;
+        }
+        this.guessNumber = 0;
+        this.initGame();
+        do
+        {
+            this.getGuess();
+            this.checkGuess();
+            this.guessNumber += 1;
+
+        }while(!this.isCorrect && this.guessNumber <= 6);
+
+        if ( this.isCorrect ){this.state = GameState.GAME_WINNER;}
+        else{this.state = GameState.GAME_LOSER;}
+        checkGameResults();
+    }
+
+    public void checkGameResults()
+    {
+        if (this.state == GameState.GAME_WINNER)
+        {
+            System.out.println("Congratulations you won!!!!!");
+        }
+        else
+        {
+            System.out.println("You lost Try again");
+        }
+    }
+
+
+
+    public void initGame()
+    {
+        if (this.state == GameState.GAME_IN_PROGRESS)
+        {
+            System.out.println("Invalid State");
+            return;
+        }
+
+        File f = new File("words.txt");
+        boolean generateNew = true;
+        if (f.exists())
+        {
+            String input;
+            Pattern p = Pattern.compile("^[YyNn]$");
+            Matcher matcher;
+            System.out.println("A word Dictionary already exists, would you like to generate a new one? [Y|N]");
+            do
+            {
+                input = scnr.next().toLowerCase();
+                matcher = p.matcher(input);
+                if (!matcher.matches())
+                {
+                    System.out.println("Y|N");
+                }
+            } while (!matcher.matches());
+
+            if (input.equals("n")){generateNew = false;}
+        }
+        initDictionary(generateNew);
+        this.correctWord = this.gameDictionary.selectRandomWord();
+        this.guessEvaluator = new GuessEvaluator(this.correctWord);
+        this.state = GameState.GAME_IN_PROGRESS;
+    }
+
+    public void initDictionary(boolean generateNew)
+    {
+        if (this.state == GameState.GAME_IN_PROGRESS)
+        {
+            System.out.println("Invalid Game state for creating Dictionary");
+            return;
+        }
+        if (generateNew)
+        {
+            System.out.println("Creating Dictionary.......");
+            this.gameDictionary = new GameDictionary();
+            this.gameDictionary.createMaster();
+        }
+        else
+        {
+            this.gameDictionary = new GameDictionary("words.txt");
+            this.gameDictionary.getMasterFromFile();
+        }
+    }
+    public void getGuess()
+    {
+        if ( this.state != GameState.GAME_IN_PROGRESS)
+        {
+            System.out.println("Invalid State");
+            return;
+        }
+        Pattern p = Pattern.compile("^[A-Za-z]{5}$");
+        Matcher matcher;
+        String currentGuess;
+        do
+        {
+            System.out.println("Please Input a 5 letter word");
+            currentGuess = scnr.next();
+            matcher = p.matcher(currentGuess);
+            if (!matcher.matches())
+            {
+                System.out.println("Not a valid 5 letter word");
+            }
+            if ( !this.gameDictionary.getWordSet().contains(currentGuess) )
+            {
+                System.out.println("Word not in Dictionary");
+            }
+        }while(!matcher.matches() || !this.gameDictionary.getWordSet().contains(currentGuess));
+
+        this.currentGuess = currentGuess.toLowerCase();
+    }
+
+    public void checkGuess()
+    {
+        if ( this.state != GameState.GAME_IN_PROGRESS)
+        {
+            System.out.println("Invalid State");
+            return;
+        }
+        String results = this.guessEvaluator.analyzeGuess(this.currentGuess);
+
+        System.out.println("Your Progress is: ");
+        System.out.println(results);
+        if ( results.equals("*****")){this.isCorrect = true;}
+        else{this.isCorrect = false;}
+
+    }
+
+
+
     public static void main(String[] args)
     {
         Wordle wordle = new Wordle();
-//        wordle.gameDictionary = new GameDictionary();
-//        wordle.gameDictionary.createMaster();
-        wordle.gameDictionary = new GameDictionary("words.txt");
-        wordle.gameDictionary.getMasterFromFile();
+        wordle.playGame();
 
     }
 }
