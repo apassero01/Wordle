@@ -33,7 +33,7 @@ public class DictionaryProcessor extends TextProcessor
     @Override
     protected void processWord(String word)
     {
-        Pattern p = Pattern.compile("^[A-Z]{5}$");
+        Pattern p = Pattern.compile("^[A-Z]{4,5}$");
         Matcher matcher = p.matcher(word);
 
         if ( matcher.matches() )

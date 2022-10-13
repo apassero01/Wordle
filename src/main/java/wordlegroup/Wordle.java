@@ -48,8 +48,6 @@ enum GameState
 }
 public class Wordle {
 
-    public static final int WORD_LENGTH = 5;
-
     private static Scanner scnr;
 
     private int guessNumber;
@@ -66,10 +64,13 @@ public class Wordle {
 
     private GameDictionary gameDictionary;
 
+    private Alphabet alphabet;
+
     public Wordle()
     {
         this.state = GameState.NO_GAME;
         this.scnr = new Scanner(System.in);
+        this.alphabet = new Alphabet();
     }
 
     public void playGame()
@@ -83,11 +84,13 @@ public class Wordle {
         this.initGame();
         do
         {
+            this.alphabet.displayAlphabet();
             this.getGuess();
             this.checkGuess();
+            this.alphabet.compareWords(this.correctWord,this.currentGuess);
             this.guessNumber += 1;
 
-        }while(!this.isCorrect && this.guessNumber <= 6);
+        }while(!this.isCorrect && this.guessNumber <= 5);
 
         if ( this.isCorrect ){this.state = GameState.GAME_WINNER;}
         else{this.state = GameState.GAME_LOSER;}
@@ -103,7 +106,9 @@ public class Wordle {
         else
         {
             System.out.println("You lost Try again");
+            System.out.println("Correct word is " + this.correctWord);
         }
+        this.state = GameState.NO_GAME;
     }
 
 
@@ -180,7 +185,7 @@ public class Wordle {
             {
                 System.out.println("Not a valid 5 letter word");
             }
-            if ( !this.gameDictionary.getWordSet().contains(currentGuess) )
+            else if ( !this.gameDictionary.getWordSet().contains(currentGuess) )
             {
                 System.out.println("Word not in Dictionary");
             }
@@ -209,8 +214,32 @@ public class Wordle {
 
     public static void main(String[] args)
     {
-        Wordle wordle = new Wordle();
-        wordle.playGame();
+        Pattern p = Pattern.compile("^[YyNn]$");
+        Matcher matcher;
+        boolean keepPlaying = false;
+        String input;
+        do
+        {
+            Wordle wordle = new Wordle();
+            wordle.playGame();
+            System.out.println("Would you like to play again [Y|N]");
+            do
+            {
+                input = scnr.next().toLowerCase();
+                matcher = p.matcher(input);
+                if (!matcher.matches())
+                {
+                    System.out.println("Y|N");
+                }
+            }while(!matcher.matches());
+
+
+            if (input.toLowerCase().equals("y")){keepPlaying = true;}
+            else{keepPlaying = false;}
+
+        }while(keepPlaying);
+
+
 
     }
 }

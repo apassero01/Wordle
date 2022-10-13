@@ -108,6 +108,7 @@ public class TextProcessor
             {
                 totalUniqueWords+=1;
                 wordMap.put(word,1);
+
             }
             else
             {

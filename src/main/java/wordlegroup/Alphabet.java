@@ -90,8 +90,9 @@ public class Alphabet {
         {
             if(!evaluator.checkIfCharInWord(guess.charAt(i), correctWord))
             {
-              int index =  alphabet.indexOf(guess.charAt(i));
-               alphabet.remove(index);
+                if (!alphabet.contains(guess.charAt(i))){continue;}
+                int index =  alphabet.indexOf(guess.charAt(i));
+                alphabet.remove(index);
             }
 
         }
@@ -102,10 +103,16 @@ public class Alphabet {
      * A simple function that prints the valid characters in the alphabet
      */
     public void displayAlphabet(){
+        System.out.println("Current Available Letters:");
         for(int i = 0; i < alphabet.size(); i++) {
-            System.out.println(alphabet.get(i));
+            System.out.print(alphabet.get(i)+ " ");
+            if ( alphabet.size()/ 2 == i )
+            {
+                System.out.println("");
+            }
 
         }
+        System.out.println("");
     }
 
 

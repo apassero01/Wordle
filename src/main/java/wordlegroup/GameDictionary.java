@@ -104,7 +104,9 @@ public class GameDictionary
 
             for (String word:wordsInTexts)
             {
-                if( englishWords.contains(word))
+                //Check if the word is in dictionary or plural if non plural word is in dictionary.
+                if( englishWords.contains(word) ||
+                        (word.charAt(4) == 's' && englishWords.contains(word.substring(0,4))))
                 {
                     wordSet.add(word);
                 }
