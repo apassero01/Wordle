@@ -35,4 +35,15 @@
 package wordlegroup;
 
 public class Wordle {
+
+    private GameDictionary gameDictionary;
+    public static void main(String[] args)
+    {
+        Wordle wordle = new Wordle();
+//        wordle.gameDictionary = new GameDictionary();
+//        wordle.gameDictionary.createMaster();
+        wordle.gameDictionary = new GameDictionary("words.txt");
+        wordle.gameDictionary.getMasterFromFile();
+
+    }
 }
