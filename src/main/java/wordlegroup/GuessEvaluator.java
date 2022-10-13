@@ -82,9 +82,9 @@ public class GuessEvaluator {
      * This is a helper cunction that checks if an input charachter is in an input word
      * @param ch
      * @param word
-     * @return true if the given charachter is in the given word, otherwise return false
+     * @return true if the given character is in the given word, otherwise return false
      */
-    private boolean checkIfCharInWord(char ch, String word)
+    public boolean checkIfCharInWord(char ch, String word)
     {
         for(int i = 0; i < word.length(); i++)
         {
