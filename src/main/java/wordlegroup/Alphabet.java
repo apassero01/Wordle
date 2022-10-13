@@ -37,10 +37,18 @@ package wordlegroup;
 import java.util.ArrayList;
 
 public class Alphabet {
+
+    /** Initialize an arrayList that will contain the charachters of the alphabet*/
     public ArrayList<Character> alphabet;
 
+    /** Constructer class for Alphabet */
     public Alphabet(){
         alphabet = new ArrayList<Character>();
+        addAlphabetValues();
+    }
+
+    /** Adds all letters to alphabet */
+    private void addAlphabetValues() {
         alphabet.add('a');
         alphabet.add('b');
         alphabet.add('c');
@@ -70,26 +78,42 @@ public class Alphabet {
     }
 
 
+    /**
+     * Removes letters in the guess word that are not in the correct word
+     * @param correctWord word to be guessed
+     * @param guess the users guess
+     */
     public void compareWords(String correctWord, String guess)
     {
         GuessEvaluator evaluator = new GuessEvaluator(correctWord);
-        for(int i = 0; i < guess.length(); i++)
+        for(int i = 0; i < guess.length(); i+= 1)
         {
             if(!evaluator.checkIfCharInWord(guess.charAt(i), correctWord))
             {
-               alphabet.remove(guess.charAt(i));
+              int index =  alphabet.indexOf(guess.charAt(i));
+               alphabet.remove(index);
             }
 
         }
 
     }
 
+    /**
+     * A simple function that prints the valid characters in the alphabet
+     */
     public void displayAlphabet(){
-        for(int i = 0; i<alphabet.size(); i++) {
+        for(int i = 0; i < alphabet.size(); i++) {
             System.out.println(alphabet.get(i));
 
         }
     }
 
 
+    /**
+     *  Getter method for alphabet size
+     * @return size of the valid alphabet
+     */
+    public int getAlphabetSize() {
+        return alphabet.size();
+    }
 }
