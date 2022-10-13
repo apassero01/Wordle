@@ -45,6 +45,12 @@ public class GuessEvaluator {
         this.correctWord = correctWord;
     }
 
+
+    /**
+     * This is a function that compares the current guess to the correct word
+     * @param currentGuess
+     * @return String the result of the guess
+     */
     public String analyzeGuess(String currentGuess)
     {
         this.currentGuess = currentGuess;
@@ -52,16 +58,40 @@ public class GuessEvaluator {
 
         for(int i = 0; i < this.correctWord.length(); i++)
         {
+
+            //Check if character int guess is correct and in the correct position
             if(this.currentGuess.charAt(i) == this.correctWord.charAt(i))
             {
-                result += "";
+                result += "*";
             }
+            // check if the character in guess is in the word
+            else if(this.checkIfCharInWord(this.currentGuess.charAt(i), this.correctWord)){
+                result += "+";
+            }
+            // mark that the character is not in the correct word
+            else
+                result += "-";
+
         }
 
-
-
-
         return result;
+    }
+
+
+    /**
+     * This is a helper cunction that checks if an input charachter is in an input word
+     * @param ch
+     * @param word
+     * @return true if the given charachter is in the given word, otherwise return false
+     */
+    private boolean checkIfCharInWord(char ch, String word)
+    {
+        for(int i = 0; i < word.length(); i++)
+        {
+            if(ch == word.charAt(i))
+                return true;
+        }
+        return false;
     }
 
 
