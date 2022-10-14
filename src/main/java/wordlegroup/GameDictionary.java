@@ -44,32 +44,49 @@ import java.util.TreeSet;
 
 public class GameDictionary
 {
+    /** A URL to Dictionary */
     private final String MAST_DICT_URL = "https://www.gutenberg.org/cache/epub/29765/pg29765.txt";
 
+    /** List of URLs to text */
     private final String[] LIST_OF_TEXT_URLS = {"https://www.gutenberg.org/files/1342/1342-0.txt",
                                                 "https://www.gutenberg.org/cache/epub/5197/pg5197.txt",
                                                 "https://www.gutenberg.org/cache/epub/100/pg100.txt",
                                                 "https://www.gutenberg.org/cache/epub/215/pg215.txt",
                                                 "https://www.gutenberg.org/files/98/98-0.txt"};
 
+    /** Class TextProcessor used for getting valid words from text */
     private TextProcessor textProcessor;
 
+    /** Dictionary Processor used for getting words from dictionary */
     private DictionaryProcessor dictionaryProcessor;
 
+    /** Set of valid words */
     private Set<String> wordSet;
 
+    /** Name of file used */
     private String fileName;
 
+    /**
+     * Constructor for Game dictionary
+     * @param fileName
+     */
     public GameDictionary(String fileName)
     {
         this.wordSet = new TreeSet<>();
         this.fileName = fileName;
     }
+
+    /**
+     * Another constructor for game dictionary
+     */
     public GameDictionary()
     {
         this.wordSet = new TreeSet<>();
     }
 
+    /**
+     * If a file is given add words from the file to the word set
+     */
     public void getMasterFromFile()
     {
         File wordFile = new File(this.fileName);
@@ -86,6 +103,10 @@ public class GameDictionary
         }
     }
 
+    /**
+     * Using the dictionary and links to text this function proccesses both dictionary and text
+     * and adds words from both sets to the word set
+     */
     public void createMaster()
     {
         Set<String> englishWords;
@@ -115,6 +136,9 @@ public class GameDictionary
         writeToFile();
     }
 
+    /**
+     * This function adds all words from wordSet to file words.txt
+     */
     public void writeToFile()
     {
         try(PrintWriter out = new PrintWriter("words.txt");)
@@ -130,6 +154,11 @@ public class GameDictionary
         }
 
     }
+
+    /**
+     * This function returns a random word from word set
+     * @return a random word
+     */
     public String selectRandomWord()
     {
         String[] arrayOfWords = wordSet.toArray(new String[wordSet.size()]);
@@ -139,6 +168,10 @@ public class GameDictionary
         return arrayOfWords[randNumber];
     }
 
+    /**
+     * A getter function for Set<String> wordSet
+     * @return
+     */
     public Set<String> getWordSet()
     {
         return wordSet;
