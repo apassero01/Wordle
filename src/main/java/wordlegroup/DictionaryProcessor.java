@@ -19,17 +19,31 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/** Child Class of TextProcessor */
 public class DictionaryProcessor extends TextProcessor
 {
+    /** Set for valid set of words */
     protected Set<String> setOfWords;
+
+    /**
+     * int for number of words
+     */
     protected int number;
 
+    /**
+     * Constructor for DictionaryProcessor
+     * @param url
+     */
     public DictionaryProcessor(String url)
     {
         super(url);
         this.setOfWords = new TreeSet<>();
     }
 
+    /**
+     * If the word from the dictionary meets the criteria for the game add the word to setOfWords
+     * @param word
+     */
     @Override
     protected void processWord(String word)
     {
@@ -42,11 +56,19 @@ public class DictionaryProcessor extends TextProcessor
         }
     }
 
+    /**
+     * This function prints the total number of valid words
+     */
     @Override
     protected void printReport()
     {
         System.out.println("Total number of Words: " + this.setOfWords.size());
     }
+
+    /**
+     * A getter function for setOfWords
+     * @return setOfWords
+     */
     @Override
     public Set<String> getSetOfWords()
     {
