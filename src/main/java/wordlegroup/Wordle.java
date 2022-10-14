@@ -39,6 +39,9 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Enumertaion type for the current state of the game
+ */
 enum GameState
 {
     NO_GAME,
@@ -48,24 +51,35 @@ enum GameState
 }
 public class Wordle {
 
+    /** Scanner for users guess */
     private static Scanner scnr;
 
+    /** Counter for number of guesses */
     private int guessNumber;
 
+    /** A string for the users current guess */
     private String currentGuess;
 
+    /** The word that the user is trying to guess */
     private String correctWord;
 
+    /** Boolean stating if the user's guess was correct */
     private boolean isCorrect;
-
+    /** GuessEvaluator to evaluate the users guess */
     private GuessEvaluator guessEvaluator;
 
+    /**
+     * GameState enumeration type forThe current state of the game
+     */
     private GameState state;
 
+    /** GameDictionary class for the words that the user will attempt to guess */
     private GameDictionary gameDictionary;
 
+    /** Alphabet class to list to the user the possible letters in the correct word */
     private Alphabet alphabet;
 
+    /** Constructor for Wordle() class */
     public Wordle()
     {
         this.state = GameState.NO_GAME;
@@ -73,6 +87,9 @@ public class Wordle {
         this.alphabet = new Alphabet();
     }
 
+    /**
+     * This Function runs as the user plays the game
+     */
     public void playGame()
     {
         if (this.state == GameState.GAME_IN_PROGRESS)
@@ -97,6 +114,10 @@ public class Wordle {
         checkGameResults();
     }
 
+    /**
+     * Function that tells the users if they won or lost
+     * If they lost tell the user the correct word
+     */
     public void checkGameResults()
     {
         if (this.state == GameState.GAME_WINNER)
@@ -112,7 +133,9 @@ public class Wordle {
     }
 
 
-
+    /**
+     * Function to start the game
+     */
     public void initGame()
     {
         if (this.state == GameState.GAME_IN_PROGRESS)
@@ -147,6 +170,12 @@ public class Wordle {
         this.state = GameState.GAME_IN_PROGRESS;
     }
 
+    /**
+     * Function to start the dictionary
+     * if generateNew is true generate a dictionary, if not use the words from file words.txt
+     * @param generateNew a boolean determingn whether r not a new GameDictionary is created or
+     *                    using words from words.txt
+     */
     public void initDictionary(boolean generateNew)
     {
         if (this.state == GameState.GAME_IN_PROGRESS)
@@ -166,6 +195,10 @@ public class Wordle {
             this.gameDictionary.getMasterFromFile();
         }
     }
+
+    /**
+     * Get the users guess
+     */
     public void getGuess()
     {
         if ( this.state != GameState.GAME_IN_PROGRESS)
@@ -194,6 +227,9 @@ public class Wordle {
         this.currentGuess = currentGuess.toLowerCase();
     }
 
+    /**
+     * Check the users gues
+     */
     public void checkGuess()
     {
         if ( this.state != GameState.GAME_IN_PROGRESS)
@@ -211,7 +247,10 @@ public class Wordle {
     }
 
 
-
+    /**
+     * Main method for Wordle
+     * @param args
+     */
     public static void main(String[] args)
     {
         Pattern p = Pattern.compile("^[YyNn]$");
