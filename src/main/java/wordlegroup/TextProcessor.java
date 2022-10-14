@@ -43,19 +43,33 @@ import java.util.regex.Pattern;
 
 public class TextProcessor
 {
+    /**A string for the url to the text */
     public String url;
 
+    /** A scanner to scan the text */
     protected static Scanner scnr;
 
+    /** A Map with a word and the number of times it appears */
     private Map<String,Integer> wordMap;
 
+    /** A count of total words */
     protected int totalWords;
 
+    /** A count of discarded words */
     private int totalWordsDiscarded;
 
+    /**
+     * A count of the total valid words
+     */
     private int totalGoodWords;
 
+    /** A count of unique words */
     private int totalUniqueWords;
+
+    /**
+     * A constructor for class TextProcessor
+     * @param url
+     */
     public TextProcessor(String url)
     {
         this.url = url;
@@ -66,6 +80,9 @@ public class TextProcessor
         totalWordsDiscarded = 0;
     }
 
+    /**
+     * A function that calls processWord(String currentWord) to go through all of the words in the text
+     */
     protected void processTextAtURL()
     {
         try( BufferedInputStream in = new BufferedInputStream(new URL(this.url).openStream());)
@@ -86,6 +103,14 @@ public class TextProcessor
         }
     }
 
+    /**
+     * This function processes a given word, and adds to the total word count
+     * If the word is not 5 letters and only contains lowercase letters discard the word
+     * If the words does is five letter and only contains lower case letters add to totalGoodWords
+     * If the word is not in already in the map add to unique words, and add word to map with Integer value of 1
+     * If the word is in the map add 1 to the Integer value of the word in the map
+     * @param word
+     */
     protected void processWord(String word)
     {
         this.totalWords += 1;
@@ -119,6 +144,10 @@ public class TextProcessor
 
     }
 
+
+    /**
+     * A function that prints all the results from the processed text
+     */
     protected void printReport()
     {
         System.out.println("Total Number of Words Processed: "+ totalWords);
@@ -136,6 +165,10 @@ public class TextProcessor
         }
     }
 
+    /**
+     * Initializes a Set<String> and adds all words that appear more than once to it
+     * @return wordSet
+     */
     public Set<String> getSetOfWords()
     {
         Set<String> wordSet = new TreeSet<>();
