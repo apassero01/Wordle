@@ -30,8 +30,6 @@ class AlphabetTest {
         alphabet.compareWords("hello","yello");
         assertEquals(25,alphabet.getAlphabetSize());
 
-
-
     }
 
 
