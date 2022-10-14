@@ -26,11 +26,6 @@ public class DictionaryProcessor extends TextProcessor
     protected Set<String> setOfWords;
 
     /**
-     * int for number of words
-     */
-    protected int number;
-
-    /**
      * Constructor for DictionaryProcessor
      * @param url
      */
@@ -74,9 +69,5 @@ public class DictionaryProcessor extends TextProcessor
     {
         return this.setOfWords;
     }
-
-
-
-
 
 }

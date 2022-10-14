@@ -246,6 +246,11 @@ public class Wordle {
 
     }
 
+    public GameState getState()
+    {
+        return this.state;
+    }
+
 
     /**
      * Main method for Wordle
