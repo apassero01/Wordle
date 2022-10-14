@@ -183,6 +183,11 @@ public class TextProcessor
         return wordSet;
     }
 
-
-
+    /**
+     * Getter function for discarded words
+     * @return number of discarded words
+     */
+    public int getTotalWordsDiscarded() {
+        return totalWordsDiscarded;
+    }
 }
